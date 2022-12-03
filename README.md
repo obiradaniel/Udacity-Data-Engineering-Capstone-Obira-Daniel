@@ -47,7 +47,7 @@ Folders:
 
 ***
 Changes after FeedBack from Reviewer:
- 1. Pipelines Schedules should be monthly because the i94 summary data is posted mothly.
+ 1. Pipelines Schedules should be monthly because the i94 summary data is posted monthly.
  Depending on the day that data is normally posted the DAG can run a day after with,
   3-5 retries with 12 hours to a day retry interval.
  2. Added details on how to handle the data increase by 100X ,
