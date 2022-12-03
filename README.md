@@ -1,72 +1,79 @@
-# Sparkify Song Play Data Pipelines with Airflow Project
+# Udacity Data Engineering Capstone Project: Analysis and Pipelines for Immigration data to US
 
-### ***Udacity Data Engineering Course 4: Automate Data Pipelines***
+### ***Udacity Data Engineering Course 5: Data Engineering Capstone Project***
 ### ***Final Course Project Assignment***
 
 ***
-A music streaming startup (Sparkify) stores all it's key event data on S3.
-The data is well structured as a Data Lake with json files.
+In a NutShell Parquet is a Hero.
 
-This project implements an Airflow managed ETL pipeline to extract data from S3, then load it to Redshift, with data quality checks.
-The pipeline is split into tasks that are managed by Airflow and data is backfilled, by running a day at a time for the required backfilling of one month.
+Processing All US Visitors in March 2016, about 3,157,072 People from Raw SAS data to some few insights.
 
-The whole project is based on Airflow and custom hooks and operators for AWS, RedShift (PostgreS), S3.
+The project follows the follow steps:
+
+Step 1: Scope the Project and Gather Data
+
+Step 2: Explore and Assess the Data
+
+Step 3: Define the Data Model
+
+Step 4: Run ETL to Model the Data
+
+Step 5: Complete Project Write Up
+
+This project transforms SAS data to Parquet,  Pushes it to S3, cleans, renames columns and
+then exports to final parquet for futher upstream analysis and creates functions to do that.
+
+Some simple Analysis is done for the month of March 2016, some 3,157,072 Passengers, 
+the insights are then joined to spatial data to make simple maps.
+
+To analyse even just 2-3 months you will need EMR.
+Total data for the whole year is 40,790,529 Records.
+
+The whole project is mainly on the Udacity Workspace and based on PySpark, Boto3, Matplotlib, 
+Pandas and GeoPandas for the mapping.
 ***
 ## Contents: 
-1. Data to be used: the data is stored in a S3 Bucket for Udacity
-    1. Listening events for it's streaming data as JSON logfiles.
-    2. Song data for all tracks available on it's service as JSON files. 
-    
-2. Custom Air Flow Operators (In operators subfolder)
- 
-    1. Stage Operator (stage_redshift.py) - loads data from S3 to RedShift
-     from raw JSON Logs and Songfiles
-    2. Fact Operator (load_fact.py) - loads data from RedShift Staging tables to facts tables
-    3. Dimension Operator (load_dimension.py) - loads data from RedShift Staging tables to Dimension tables
-    4. Data Quality Operator (data_quality.py) - tests against a given list of tests with
-    expected values and raises an Error if values differ.
-
-3. Sparkify DAG (sparkify_dag.py)
-Initializes all the sub-tasks and creates dependencies thus connects tasks to
-another to create the whole pipeline.
+1. Data to be used: 
+    1. Mainly I94 Immigration data, it's metadata and some spatial data. 
 
 ***
-Made these changes after good technical feedback from the reviewer:
- 1. Changed DAG schedule to hourly
- 2. Used lists to group task dependencies for upstream and down stream tasks 
-    instead of individually task by next task.
- 3. Updated the Data Quality Operator to use enumerate() instead 
-    of separately tracking the test index in the whole set of tests.
-    Changed elf.log to self.log for logging if no tests were provided.
-    Improved Logging if all tests passed.
+Folders:
+ 1. sas_data_raw/2016/03 - Raw Parquet from SAS Export
+ 2. sas_data_final/2016/03 - Processed Parquet ready for Upstream Analysis
+ 3. Mapping - Files for Integration into Parquet
+ 4. Pictures - Key Project Pictures
+ 5. Analysis_Output - CSv output from analytical PySpark Queries for GIS Mapping
+ 6. GIS - Shapefiles for Mapping
 
 ***
-### To run (For a local Setup, not the Udacity Environment)
-### 1. update 'dwh.cfg' with the right AWS credentials and required RedShift settings
-### 2. Then create and start redshift cluster with create_redshift.py module, 
-###     update path to folder for sys.path accordingly for the DAG.
-### 3. Start Airflow Webserver and scheduler with all the files in the dag folder, 
-###    connect the cluster to PostGres or another RDMS
-###    to enable parallel execution (won't happen on SQLite)
-### 4. Create and test all Airflow connections to AWS, RedShift
-### 5. Turn on Sparkify DAG on Airflow Web UI and monitor execution.
-### 6. Wait for your Data!!!, then delete RedShift Cluster.
+### To run
+### 1. update 'dwh.cfg' with the right AWS credentials 
+### 2. Work all the PySpark on Udacity WorkSpace, Export the outputs for Mapping
+### 3. Download the NoteBook and outputs from the Udacity WorkSpace and 
+### then do the GIS using GeoPandas on your local machine.
+### Options
+### You can use EMR if you have pushed the parquet to S3.
 
-## Dag Graph Overview in Airflow
-![Dag Image](https://raw.githubusercontent.com/obiradaniel/Sparkify-Airflow-Pipeline/main/1_Sparkify_DAG.png)
+## S3 Bucket with monthly Raw Data 2016
+![S3 Raw Bucket](https://raw.githubusercontent.com/obiradaniel/Udacity-Data-Engineering-Capstone-Obira-Daniel/master/Pictures/Raw_S3_bucket.png)
 
-## Sparkify Redshift DW Schema (DB Beaver)
-![Dag Image](https://raw.githubusercontent.com/obiradaniel/Sparkify-Airflow-Pipeline/main/2_schema_redshift_DW.png)
+## Numerical Variable Distribution
+![Numbers Dist](https://raw.githubusercontent.com/obiradaniel/Udacity-Data-Engineering-Capstone-Obira-Daniel/master/Pictures/Numerical_dist.png)
 
-## Sparkify DAG RUN (SQL in validate was updated)
-![Dag Image](https://raw.githubusercontent.com/obiradaniel/Sparkify-Airflow-Pipeline/main/3_Sparkify_DAG_run.png)
+## Data Schema
+![Schema](https://raw.githubusercontent.com/obiradaniel/Udacity-Data-Engineering-Capstone-Obira-Daniel/master/Pictures/Data_Schema.png)
 
-## Dag Graph Overview in Airflow after Successful Run 
-## (SQL in validate was updated)
-![Dag Image](https://raw.githubusercontent.com/obiradaniel/Sparkify-Airflow-Pipeline/main/4_Sparkify_DAG_successful_run.png)
+## Key Categorical Value Distribution
+![Categorical Values](https://raw.githubusercontent.com/obiradaniel/Udacity-Data-Engineering-Capstone-Obira-Daniel/master/Pictures/Categorical_dist.png)
 
-## Red Shift Query
-![Dag Image](https://raw.githubusercontent.com/obiradaniel/Sparkify-Airflow-Pipeline/main/5_redshift_query.png)
+## World Map showing US Visitors March 2016
+![World Map](https://raw.githubusercontent.com/obiradaniel/Udacity-Data-Engineering-Capstone-Obira-Daniel/master/Pictures/US_visitors.png)
+
+## US State Map by Visitors 2016
+![US State Map](https://raw.githubusercontent.com/obiradaniel/Udacity-Data-Engineering-Capstone-Obira-Daniel/master/Pictures/Visitors_US_States_March_2016.png)
+
+## Airport Map by Visitors March 2016
+![Airport Map](https://raw.githubusercontent.com/obiradaniel/Udacity-Data-Engineering-Capstone-Obira-Daniel/master/Pictures/Airports_US.png)
 
 
-### ***Obira Daniel, November 2022***
+### ***Obira Daniel, December 2022***
