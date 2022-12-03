@@ -46,6 +46,15 @@ Folders:
  6. GIS - Shapefiles for Mapping
 
 ***
+Changes after FeedBack from Reviewer:
+ 1. Pipelines Schedules should be monthly because the i94 summary data is posted mothly.
+ Depending on the day that data is normally posted the DAG can run a day after with,
+  3-5 retries with 12 hours to a day retry interval.
+ 2. Added details on how to handle the data increase by 100X ,
+ and the technical implementation overview of such an increase in data.
+ 3. Removed the Extra Cells after the Data Dictionary
+
+***
 ### To run
 ### 1. update 'dwh.cfg' with the right AWS credentials 
 ### 2. Work all the PySpark on Udacity WorkSpace, Export the outputs for Mapping
@@ -54,7 +63,7 @@ Folders:
 ### Options
 ### You can use EMR if you have pushed the parquet to S3.
 
-## S3 Bucket with monthly Raw Data 2016
+## S3 Bucket with monthly Raw Parquet Data 2016
 ![S3 Raw Bucket](https://raw.githubusercontent.com/obiradaniel/Udacity-Data-Engineering-Capstone-Obira-Daniel/master/Pictures/Raw_S3_bucket.png)
 
 ## Numerical Variable Distribution
