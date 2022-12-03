@@ -1,0 +1,114 @@
+Data Dictionary (Variables are meaningful, the name matches the meaning)
+
+1.i94 Processed(Processed Parquet Data in /sas_data_final/ folder by month or /sas_data_final/ S3 bucket)
+ |-- i94_id: integer  - Primary Key
+ |-- Year: integer  - Year of Travel
+ |-- Month: integer  - Month of Travel
+ |-- CountryCode: integer  - Custom Numeric Country Code
+ |-- CountryResidenceCode: integer - Custom Numeric Country Code
+ |-- AirportCode: string  - Airport Code to be joined to IATA Airports data
+ |-- DateOfArrival: date  - Arrival in US
+ |-- ModeOfTransport: integer  - Code for Means of Tansport
+ |-- StateCodeUS: string  - US State Code
+ |-- DateOfDeparture: date 
+ |-- AgeYears: integer 
+ |-- VisaReason: integer 
+ |-- CountVar: integer 
+ |-- DateAdded_I94: string 
+ |-- VisaIssueDepartment: string 
+ |-- OccupationUS: string 
+ |-- ArrivalSituation: string 
+ |-- DepartureStatus: string 
+ |-- CurrentStatus: string 
+ |-- MatchArrivalDeparture: string 
+ |-- YearofBirth: integer 
+ |-- DateAdmittedUS: string 
+ |-- Gender: string 
+ |-- InsNum: string 
+ |-- Airline: string 
+ |-- AdminNum: integer 
+ |-- FlightNum: string 
+ |-- VisaType: string 
+ |-- US_State: string 
+ |-- Country: string 
+ |-- TransportMeans: string 
+ |-- ReasonForVisa: string 
+ |-- PortOfEntry: string 
+ |-- Us_State_Country: string 
+
+2.Airports(Airports_Processed.csv)
+ |-- _c0: string 
+ |-- ident: string 
+ |-- name: string 
+ |-- continent: string 
+ |-- iso_country: string 
+ |-- municipality: string 
+ |-- iata_code: string 
+ |-- local_code: string 
+ |-- lat: string 
+ |-- long: string
+
+3.US Demograchics(us-cities-demographics.csv)
+ |-- City: string 
+ |-- State: string 
+ |-- Median Age: string 
+ |-- Male Population: string 
+ |-- Female Population: string 
+ |-- Total Population: string 
+ |-- Number of Veterans: string 
+ |-- Foreign-born: string 
+ |-- Average Household Size: string 
+ |-- State Code: string 
+ |-- Race: string 
+ |-- Count: string 
+
+4.CountryCodes(Country_Codes.csv)
+ |-- Code: string 
+ |-- Country: string 
+
+5.PortCodes(Port_Codes.csv)
+ |-- Code: string 
+ |-- PortOfEntry: string 
+ |-- Us_State_Country: string 
+
+
+6.TransportCodes(TransportMeansCode.csv)
+ |-- Code: string 
+ |-- TransportMeans: string 
+
+7.US_State_Codes(US_States.csv)
+ |-- Code: string 
+ |-- US_State: string 
+
+
+8.VisaReasonsCodes(VisaReasons.csv)
+ |-- Code: string 
+ |-- ReasonForVisa: string 
+
+Data Exported from Analysis: (Analysis_Output Folder) for March 2016
+9.All Visitors by Airport Code - joined to Airports to Make Airport map
+ |-- AiportCode: string 
+ |-- Records: string 
+
+10.Visitors by Country of Origin - joined to World Countries Shapefile to Make World US Visitor map
+ |-- Country: string 
+ |-- Records: string 
+ |-- CountryMatch: string 
+
+11.Visitors by US State Visited - joined to US States to Make US State Map  by Number of Visitors
+ |-- StateCodeUS: string 
+ |-- Records: string 
+
+ GIS Data Shapefiles (GIS_Data Folder, All are in GCS_WGS_1984 Projection (EPSG:4326))
+ 12. All US States - All 50 US States with key attributes
+
+ 13. Cities - World Cities with key attributes
+
+ 14. Countries - World Countries with key attributes
+
+ 15. US states without Hawaii and Alaska to optimize map display extent
+
+
+
+
+
